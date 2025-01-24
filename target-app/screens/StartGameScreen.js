@@ -5,8 +5,10 @@ function StartGameScreen() {
     return (
         <View style={styles.startGameContainer}>
             <TextInput style={styles.numberInput} inputMode='decimal' maxLength={2}/>
-            <PrimaryButton>Reset</PrimaryButton>
-            <PrimaryButton>Confirm</PrimaryButton>
+            <View style={styles.buttonContainer}>
+                <PrimaryButton>Reset</PrimaryButton>
+                <PrimaryButton>Confirm</PrimaryButton>
+            </View>
         </View>
     )
 }
@@ -36,5 +38,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  buttonContainer: {
+    
   }
 })
