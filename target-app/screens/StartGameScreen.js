@@ -6,8 +6,12 @@ function StartGameScreen() {
         <View style={styles.startGameContainer}>
             <TextInput style={styles.numberInput} inputMode='decimal' maxLength={2}/>
             <View style={styles.buttonContainer}>
-                <PrimaryButton>Reset</PrimaryButton>
-                <PrimaryButton>Confirm</PrimaryButton>
+                <View style={styles.button}>
+                    <PrimaryButton>Reset</PrimaryButton>
+                </View>
+                <View style={styles.button}>
+                    <PrimaryButton>Confirm</PrimaryButton>
+                </View>
             </View>
         </View>
     )
@@ -17,6 +21,7 @@ export default StartGameScreen
 
 const styles = StyleSheet.create({
   startGameContainer: {
+    alignItems: 'center',
     padding: 16,
     marginTop: 100,
     marginHorizontal: 30,
@@ -36,10 +41,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     color: 'orange',
     marginVertical: 8,
+    marginBottom: 20,
     fontWeight: 'bold',
     textAlign: 'center'
   },
   buttonContainer: {
-    
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  button: {
+    flex: 1
   }
 })
