@@ -6,7 +6,7 @@ import Card from "../components/Card"
 function GameOverScreen({pickedNumber}) {
     return (
         <View style={styles.screen}>
-            <Card>
+            <Card style={styles.cardOverride}>
                 <Title>Game Over!</Title>
                 <Subtitle>The picked number was:</Subtitle>
                 <Text style={styles.numberContainer}>{pickedNumber}</Text>
@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         padding: 10
+    },
+    cardOverride: {
+        backgroundColor: 'orange'
     }
 })
 
