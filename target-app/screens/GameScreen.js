@@ -1,6 +1,6 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import Title from "../components/Title";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Colors from "../constants/colors";
 import PrimaryButton from "../components/PrimaryButton";
 import Subtitle from "../components/Subtitle";
@@ -18,7 +18,7 @@ function generateRandomNumberBetween(min, max, exclude) {
 let minimumGuess = 1
 let maximumGuess = 100
 
-function GameScreen({pickedNumber}) {
+function GameScreen({pickedNumber, onGameOver}) {
     const [guess, setGuess] = useState(generateRandomNumberBetween(minimumGuess, maximumGuess, pickedNumber))
     const [guessHistory, setGuessHistory] = useState([])
 
@@ -39,10 +39,13 @@ function GameScreen({pickedNumber}) {
             
     }
 
-    if (guess === pickedNumber) {
-        console.log("Game over, match found!")
-        return
-    }
+    useEffect(() => {
+        if (guess === pickedNumber) {
+            console.log("Game over, match found!")
+            onGameOver()
+        }
+    }, [guess])
+
 
     return (
         <View style={styles.screen}>
