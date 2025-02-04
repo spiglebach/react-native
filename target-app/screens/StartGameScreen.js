@@ -1,7 +1,8 @@
-import { Alert, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, StyleSheet, TextInput, View } from 'react-native'
 import PrimaryButton from '../components/PrimaryButton'
 import { useState } from 'react'
 import Colors from '../constants/colors'
+import Card from '../components/Card'
 
 function StartGameScreen({onNumberPicked}) {
     const [enteredNumber, setEnteredNumber] = useState('')
@@ -30,20 +31,22 @@ function StartGameScreen({onNumberPicked}) {
 
     return (
         <View style={styles.startGameContainer}>
-            <TextInput
-                    style={styles.numberInput}
-                    inputMode='decimal'
-                    maxLength={2}
-                    onChangeText={numberInputHandler}
-                    value={enteredNumber}/>
-            <View style={styles.buttonContainer}>
-                <View style={styles.button}>
-                    <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+            <Card>
+                <TextInput
+                        style={styles.numberInput}
+                        inputMode='decimal'
+                        maxLength={2}
+                        onChangeText={numberInputHandler}
+                        value={enteredNumber}/>
+                <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                        <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+                    </View>
+                    <View style={styles.button}>
+                        <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+                    </View>
                 </View>
-                <View style={styles.button}>
-                    <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-                </View>
-            </View>
+            </Card>
         </View>
     )
 }
@@ -52,19 +55,11 @@ export default StartGameScreen
 
 const styles = StyleSheet.create({
   startGameContainer: {
-    alignItems: 'center',
-    padding: 16,
-    marginTop: 100,
-    marginHorizontal: 30,
-    backgroundColor: Colors.accent,
-    borderRadius: 16,
-    elevation: 8, // shadow on android
-    shadowColor: 'black', // shadow on ios
-    shadowOffset: { width: 6, height: 4}, // shadow on ios
-    shadowRadius: 4, // shadow on ios
-    shadowOpacity: 0.4 // shadow on ios
+    marginTop: 50,
+    marginHorizontal: 30
   },
   numberInput: {
+    alignSelf: 'center',
     height: 50,
     width: 60,
     fontSize: 32,

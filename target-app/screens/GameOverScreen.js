@@ -1,14 +1,16 @@
 import { StyleSheet, Text, View } from "react-native"
 import Title from "../components/Title"
-import Colors from "../constants/colors"
 import Subtitle from "../components/Subtitle"
+import Card from "../components/Card"
 
 function GameOverScreen({pickedNumber}) {
     return (
         <View style={styles.screen}>
-            <Title>Game Over!</Title>
-            <Subtitle>The picked number was:</Subtitle>
-            <Text style={styles.numberContainer}>{pickedNumber}</Text>
+            <Card>
+                <Title>Game Over!</Title>
+                <Subtitle>The picked number was:</Subtitle>
+                <Text style={styles.numberContainer}>{pickedNumber}</Text>
+            </Card>
         </View>
     )
 }
@@ -16,10 +18,7 @@ function GameOverScreen({pickedNumber}) {
 const styles = StyleSheet.create({
     screen: {
         marginTop: 50,
-        marginHorizontal: 30,
-        borderRadius: 20,
-        padding: 30,
-        backgroundColor: Colors.accent
+        marginHorizontal: 30
     },
     numberContainer: {
         fontSize: 30,

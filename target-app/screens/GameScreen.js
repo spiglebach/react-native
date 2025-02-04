@@ -1,9 +1,9 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import Title from "../components/Title";
 import { useEffect, useState } from "react";
-import Colors from "../constants/colors";
 import PrimaryButton from "../components/PrimaryButton";
 import Subtitle from "../components/Subtitle";
+import Card from "../components/Card";
 
 function generateRandomNumberBetween(min, max, exclude) {
     const randomNumber = Math.floor(Math.random() * (max - min)) + min
@@ -49,25 +49,27 @@ function GameScreen({pickedNumber, onGameOver}) {
 
     return (
         <View style={styles.screen}>
-            <Title>Opponent's Guess</Title>
-            <View style={styles.guessContainer}>
-                <Text style={styles.guessText}>{guess}</Text>
-            </View>
-            <View>
-                <Subtitle>Lower or Higher?</Subtitle>
-                <View style={styles.buttonContainer}>
-                    <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>Lower</PrimaryButton>
-                    <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>Higher</PrimaryButton>
+            <Card>
+                <Title>Opponent's Guess</Title>
+                <View style={styles.guessContainer}>
+                    <Text style={styles.guessText}>{guess}</Text>
                 </View>
-            </View>
-            <View style={styles.historyContainer}>
-                <Subtitle>Guess history</Subtitle>
-                {guessHistory.map((historicalGuess, index) => {
-                    return (
-                        <Text key={`guess-${index}`} style={styles.guessHistoryText}>Guess #{index + 1}: {historicalGuess}</Text>
-                    )
-                })}
-            </View>
+                <View>
+                    <Subtitle>Lower or Higher?</Subtitle>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>Lower</PrimaryButton>
+                        <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>Higher</PrimaryButton>
+                    </View>
+                </View>
+                <View style={styles.historyContainer}>
+                    <Subtitle>Guess history</Subtitle>
+                    {guessHistory.map((historicalGuess, index) => {
+                        return (
+                            <Text key={`guess-${index}`} style={styles.guessHistoryText}>Guess #{index + 1}: {historicalGuess}</Text>
+                        )
+                    })}
+                </View>
+            </Card>
         </View>
     )
 }
@@ -75,10 +77,7 @@ function GameScreen({pickedNumber, onGameOver}) {
 const styles = StyleSheet.create({
     screen: {
         marginTop: 50,
-        marginHorizontal: 30,
-        borderRadius: 20,
-        padding: 30,
-        backgroundColor: Colors.accent
+        marginHorizontal: 30
     },
     guessContainer: {
         alignItems: 'center'
