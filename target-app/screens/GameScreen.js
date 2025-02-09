@@ -37,7 +37,6 @@ function GameScreen({pickedNumber, onGameOver}) {
         }
         setGuessHistory(previousGuessHistory => [...previousGuessHistory, guess])
         setGuess(generateRandomNumberBetween(minimumGuess, maximumGuess))
-            
     }
 
     useEffect(() => {
