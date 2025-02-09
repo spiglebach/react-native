@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     subtitle: {
         width: '80%',
         marginHorizontal: 'auto',
+        fontFamily: 'open-sans',
         fontSize: 18,
         color: Colors.primary500,
         textAlign: 'center',

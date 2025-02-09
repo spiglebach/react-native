@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     guessText: {
+        fontFamily: 'open-sans-bold',
         textAlign: 'center',
         fontSize: 20,
         fontWeight: 'bold',
