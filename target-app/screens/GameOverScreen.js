@@ -22,7 +22,6 @@ function GameOverScreen({numberOfRounds, pickedNumber, onStartNewGame}) {
 
 const styles = StyleSheet.create({
     screen: {
-        marginTop: 50,
         marginHorizontal: 10
     },
     cardOverride: {

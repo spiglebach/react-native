@@ -58,7 +58,7 @@ export default StartGameScreen
 const styles = StyleSheet.create({
   startGameContainer: {
     marginTop: 50,
-    marginHorizontal: 30
+    marginHorizontal: 10
   },
   numberInput: {
     alignSelf: 'center',

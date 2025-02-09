@@ -5,6 +5,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import { Ionicons } from '@expo/vector-icons'
 import Subtitle from "../components/Subtitle";
 import Card from "../components/Card";
+import GuessHistoryItem from "../components/GuessHistoryItem";
 
 function generateRandomNumberBetween(min, max, exclude) {
     if (min === max) {
@@ -59,7 +60,7 @@ function GameScreen({pickedNumber, onGameOver}) {
             onGameOver(guessHistory.length + 1)
             return
         } else {
-            setGuessHistory(previousGuessHistory => [...previousGuessHistory, guess])
+            setGuessHistory(previousGuessHistory => [guess, ...previousGuessHistory])
         }
     }, [guess])
 
@@ -70,7 +71,7 @@ function GameScreen({pickedNumber, onGameOver}) {
 
     return (
         <View style={styles.screen}>
-            <Card>
+            <Card style={{flex: 1}}>
                 <Title>Opponent's Guess</Title>
                 <View style={styles.guessContainer}>
                     <Text style={styles.guessText}>{guess}</Text>
@@ -91,11 +92,7 @@ function GameScreen({pickedNumber, onGameOver}) {
                     <FlatList
                             data={guessHistory}
                             keyExtractor={(item, index) => `guess-${index}-${item}`}
-                            renderItem={(itemData) => {
-                        return (
-                            <Text style={styles.guessHistoryText}>Guess #{itemData.index + 1}: {itemData.item}</Text>
-                        )
-                    }} />
+                            renderItem={(itemData) => <GuessHistoryItem guessIndex={guessHistory.length - itemData.index} guess={itemData.item} />} />
                 </View>
             </Card>
         </View>
@@ -104,8 +101,8 @@ function GameScreen({pickedNumber, onGameOver}) {
 
 const styles = StyleSheet.create({
     screen: {
-        marginTop: 50,
-        marginHorizontal: 30
+        marginHorizontal: 10,
+        flex: 1
     },
     guessContainer: {
         alignItems: 'center'
@@ -124,11 +121,8 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     historyContainer: {
-        marginTop: 20
-    },
-    guessHistoryText: {
-        padding: 6,
-        textAlign: 'center'
+        marginTop: 20,
+        padding: 16
     }
 })
 
