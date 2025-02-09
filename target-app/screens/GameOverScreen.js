@@ -3,6 +3,7 @@ import Title from "../components/Title"
 import Subtitle from "../components/Subtitle"
 import Card from "../components/Card"
 import Colors from "../constants/colors"
+import PrimaryButton from "../components/PrimaryButton"
 
 function GameOverScreen({pickedNumber}) {
     return (
@@ -12,7 +13,8 @@ function GameOverScreen({pickedNumber}) {
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={require('../assets/images/success.png')}/>
                 </View>
-                <Text>Your phone needed <Text>X</Text> round to guess the number <Text>{pickedNumber}</Text></Text>
+                <Text style={styles.summaryText}>Your phone needed <Text style={styles.highlightText}>X</Text> round to guess the number <Text style={styles.highlightText}>{pickedNumber}</Text></Text>
+                <PrimaryButton>Start New Game</PrimaryButton>
             </Card>
         </View>
     )
@@ -39,6 +41,18 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%'
+    },
+    summaryText: {
+        fontSize: 16,
+        fontFamily: 'open-sans',
+        color: Colors.primary500,
+        textAlign: 'center',
+        marginBottom: 24
+    },
+    highlightText: {
+        fontFamily: 'open-sans-bold',
+        color: 'maroon',
+        fontSize: 18
     }
 })
 
