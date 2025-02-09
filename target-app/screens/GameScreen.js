@@ -12,7 +12,9 @@ function generateRandomNumberBetween(min, max, exclude) {
     }
     const randomNumber = Math.floor(Math.random() * (max - min)) + min
 
-    if (exclude && randomNumber === exclude) {
+    console.log(`Randomnumber is: ${randomNumber}`);
+    console.log(`Exclude is: ${exclude}`);
+    if (randomNumber === exclude) {
         return generateRandomNumberBetween(min, max, exclude)
     } else {
         return randomNumber
@@ -23,8 +25,14 @@ let minimumGuess = 1
 let maximumGuess = 100
 
 function GameScreen({pickedNumber, onGameOver}) {
-    const [guess, setGuess] = useState(generateRandomNumberBetween(minimumGuess, maximumGuess, pickedNumber))
+    const [guess, setGuess] = useState()
     const [guessHistory, setGuessHistory] = useState([])
+
+    useEffect(() => {
+        const initialGuess = generateRandomNumberBetween(minimumGuess, maximumGuess, pickedNumber)
+        console.log(`Initial guess is ${initialGuess}`)
+        setGuess(initialGuess)
+    }, [])
 
     function nextGuessHandler(direction) { // direction: 'lower' or 'higher'
         if ((direction === 'lower' && guess < pickedNumber) || (direction === 'higher' && guess > pickedNumber)) {
@@ -38,15 +46,20 @@ function GameScreen({pickedNumber, onGameOver}) {
         } else if (direction === 'higher') {
             minimumGuess = guess + 1
         }
-        setGuess(generateRandomNumberBetween(minimumGuess, maximumGuess))
+        const newGuess = generateRandomNumberBetween(minimumGuess, maximumGuess, guess)
+        setGuess(newGuess)
     }
 
     useEffect(() => {
-        setGuessHistory(previousGuessHistory => [...previousGuessHistory, guess])
+        if (!guess) {
+            return
+        }
         if (guess === pickedNumber) {
             console.log("Game over, match found!")
-            onGameOver(guessHistory.length)
+            onGameOver(guessHistory.length + 1)
             return
+        } else {
+            setGuessHistory(previousGuessHistory => [...previousGuessHistory, guess])
         }
     }, [guess])
 
