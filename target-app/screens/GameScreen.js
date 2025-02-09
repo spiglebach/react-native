@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import Title from "../components/Title";
 import { useEffect, useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
@@ -42,7 +42,7 @@ function GameScreen({pickedNumber, onGameOver}) {
     }
 
     useEffect(() => {
-        setGuessHistory(previousGuessHistory => [guess, ...previousGuessHistory])
+        setGuessHistory(previousGuessHistory => [...previousGuessHistory, guess])
         if (guess === pickedNumber) {
             console.log("Game over, match found!")
             onGameOver(guessHistory.length)
@@ -75,11 +75,14 @@ function GameScreen({pickedNumber, onGameOver}) {
                 </View>
                 <View style={styles.historyContainer}>
                     <Subtitle>Guess history</Subtitle>
-                    {guessHistory.map((historicalGuess, index) => {
+                    <FlatList
+                            data={guessHistory}
+                            keyExtractor={(item, index) => `guess-${index}-${item}`}
+                            renderItem={(itemData) => {
                         return (
-                            <Text key={`guess-${index}`} style={styles.guessHistoryText}>Guess #{index + 1}: {historicalGuess}</Text>
+                            <Text style={styles.guessHistoryText}>Guess #{itemData.index + 1}: {itemData.item}</Text>
                         )
-                    })}
+                    }} />
                 </View>
             </Card>
         </View>
