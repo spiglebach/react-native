@@ -7,6 +7,9 @@ import Subtitle from "../components/Subtitle";
 import Card from "../components/Card";
 
 function generateRandomNumberBetween(min, max, exclude) {
+    if (min === max) {
+        return min
+    }
     const randomNumber = Math.floor(Math.random() * (max - min)) + min
 
     if (exclude && randomNumber === exclude) {
@@ -35,17 +38,22 @@ function GameScreen({pickedNumber, onGameOver}) {
         } else if (direction === 'higher') {
             minimumGuess = guess + 1
         }
-        setGuessHistory(previousGuessHistory => [...previousGuessHistory, guess])
         setGuess(generateRandomNumberBetween(minimumGuess, maximumGuess))
     }
 
     useEffect(() => {
+        setGuessHistory(previousGuessHistory => [guess, ...previousGuessHistory])
         if (guess === pickedNumber) {
             console.log("Game over, match found!")
-            onGameOver()
+            onGameOver(guessHistory.length)
+            return
         }
     }, [guess])
 
+    useEffect(() => {
+        minimumGuess = 1
+        maximumGuess = 100
+    }, [])
 
     return (
         <View style={styles.screen}>

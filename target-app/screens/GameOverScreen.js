@@ -5,7 +5,7 @@ import Card from "../components/Card"
 import Colors from "../constants/colors"
 import PrimaryButton from "../components/PrimaryButton"
 
-function GameOverScreen({pickedNumber}) {
+function GameOverScreen({numberOfRounds, pickedNumber, onStartNewGame}) {
     return (
         <View style={styles.screen}>
             <Card style={styles.cardOverride}>
@@ -13,8 +13,8 @@ function GameOverScreen({pickedNumber}) {
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={require('../assets/images/success.png')}/>
                 </View>
-                <Text style={styles.summaryText}>Your phone needed <Text style={styles.highlightText}>X</Text> round to guess the number <Text style={styles.highlightText}>{pickedNumber}</Text></Text>
-                <PrimaryButton>Start New Game</PrimaryButton>
+                <Text style={styles.summaryText}>Your phone needed <Text style={styles.highlightText}>{numberOfRounds}</Text> round to guess the number <Text style={styles.highlightText}>{pickedNumber}</Text></Text>
+                <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
             </Card>
         </View>
     )
