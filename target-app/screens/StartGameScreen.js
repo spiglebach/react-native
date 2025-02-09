@@ -3,6 +3,7 @@ import PrimaryButton from '../components/PrimaryButton'
 import { useState } from 'react'
 import Colors from '../constants/colors'
 import Card from '../components/Card'
+import Title from '../components/Title'
 
 function StartGameScreen({onNumberPicked}) {
     const [enteredNumber, setEnteredNumber] = useState('')
@@ -32,6 +33,7 @@ function StartGameScreen({onNumberPicked}) {
     return (
         <View style={styles.startGameContainer}>
             <Card>
+                <Title>Input a number between 1 and 99</Title>
                 <TextInput
                         style={styles.numberInput}
                         inputMode='decimal'
