@@ -9,6 +9,7 @@ function Card({children, style}) {
 
 const styles = StyleSheet.create({
     card: {
+        alignItems: 'center',
         padding: 20,
         marginHorizontal: 30,
         borderRadius: 20,
