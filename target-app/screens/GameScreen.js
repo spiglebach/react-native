@@ -1,4 +1,4 @@
-import { Alert, Dimensions, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import Title from "../components/Title";
 import { useEffect, useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
@@ -25,11 +25,10 @@ function generateRandomNumberBetween(min, max, exclude) {
 let minimumGuess = 1
 let maximumGuess = 100
 
-const deviceDimensions = Dimensions.get('window')
-
 function GameScreen({pickedNumber, onGameOver}) {
     const [guess, setGuess] = useState()
     const [guessHistory, setGuessHistory] = useState([])
+    const {width, height} = useWindowDimensions()
 
     useEffect(() => {
         const initialGuess = generateRandomNumberBetween(minimumGuess, maximumGuess, pickedNumber)
@@ -71,24 +70,54 @@ function GameScreen({pickedNumber, onGameOver}) {
         maximumGuess = 100
     }, [])
 
-    return (
-        <ScrollView style={styles.screen}>
-            <Card style={{flex: 1}}>
-                <Title>Opponent's Guess</Title>
+    const guessTextStyles = {
+        fontSize: width < 450 ? 30 : 44
+    }
+
+    let content
+    if (width > 500) {
+        content = <>
+            <Title>Opponent's Guess</Title>
+            <View style={styles.landscapeButtonContainer}>
+                <View>
+                    <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+                        <Ionicons name="remove" size="24" />
+                    </PrimaryButton>
+                </View>
                 <View style={styles.guessContainer}>
-                    <Text style={styles.guessText}>{guess}</Text>
+                    <Text style={[styles.guessText, guessTextStyles]}>{guess}</Text>
                 </View>
                 <View>
-                    <Subtitle>Lower or Higher?</Subtitle>
-                    <View style={styles.buttonContainer}>
-                        <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
-                            <Ionicons name="remove" size="24" />
-                        </PrimaryButton>
-                        <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>
-                            <Ionicons name="add" size="24" />
-                        </PrimaryButton>
-                    </View>
+                    <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>
+                        <Ionicons name="add" size="24" />
+                    </PrimaryButton>
                 </View>
+            </View>
+        </>
+    } else {
+        content = <>
+            <Title>Opponent's Guess</Title>
+            <View style={styles.guessContainer}>
+                <Text style={[styles.guessText, guessTextStyles]}>{guess}</Text>
+            </View>
+            <View>
+                <Subtitle>Lower or Higher?</Subtitle>
+                <View style={styles.buttonContainer}>
+                    <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+                        <Ionicons name="remove" size="24" />
+                    </PrimaryButton>
+                    <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>
+                        <Ionicons name="add" size="24" />
+                    </PrimaryButton>
+                </View>
+            </View>
+        </>
+    }
+
+    return (
+        <View style={styles.screen}>
+            <Card style={{flex: 1}}>
+                {content}
                 <View style={styles.historyContainer}>
                     <Subtitle>Guess history</Subtitle>
                     <FlatList
@@ -97,7 +126,7 @@ function GameScreen({pickedNumber, onGameOver}) {
                             renderItem={(itemData) => <GuessHistoryItem guessIndex={guessHistory.length - itemData.index} guess={itemData.item} />} />
                 </View>
             </Card>
-        </ScrollView>
+        </View>
     )
 }
 
@@ -112,7 +141,6 @@ const styles = StyleSheet.create({
     guessText: {
         fontFamily: 'open-sans-bold',
         textAlign: 'center',
-        fontSize: deviceDimensions.width < 450 ? 30 : 44,
         fontWeight: 'bold',
         padding: 12
     },
@@ -124,7 +152,12 @@ const styles = StyleSheet.create({
     },
     historyContainer: {
         marginTop: 20,
-        padding: 16
+        padding: 16,
+        flex: 1
+    },
+    landscapeButtonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 })
 
