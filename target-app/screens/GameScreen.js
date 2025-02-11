@@ -1,4 +1,4 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import Title from "../components/Title";
 import { useEffect, useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
@@ -24,6 +24,8 @@ function generateRandomNumberBetween(min, max, exclude) {
 
 let minimumGuess = 1
 let maximumGuess = 100
+
+const deviceDimensions = Dimensions.get('window')
 
 function GameScreen({pickedNumber, onGameOver}) {
     const [guess, setGuess] = useState()
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
     guessText: {
         fontFamily: 'open-sans-bold',
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: deviceDimensions.width < 450 ? 30 : 44,
         fontWeight: 'bold',
         padding: 12
     },

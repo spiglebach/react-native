@@ -1,9 +1,10 @@
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native"
 import Title from "../components/Title"
-import Subtitle from "../components/Subtitle"
 import Card from "../components/Card"
 import Colors from "../constants/colors"
 import PrimaryButton from "../components/PrimaryButton"
+
+const deviceDimensions = Dimensions.get('window')
 
 function GameOverScreen({numberOfRounds, pickedNumber, onStartNewGame}) {
     return (
@@ -31,8 +32,8 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         marginHorizontal: 'auto',
         borderRadius: '50%',
-        width: 200,
-        height: 200,
+        width: deviceDimensions.width < 380 ? 150 : 300,
+        height: deviceDimensions.width < 380 ? 150 : 300,
         borderWidth: 3,
         borderColor: Colors.primary600,
         overflow: 'hidden'
