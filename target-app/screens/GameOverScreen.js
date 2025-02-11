@@ -1,4 +1,4 @@
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native"
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import Title from "../components/Title"
 import Card from "../components/Card"
 import Colors from "../constants/colors"
@@ -8,7 +8,7 @@ const deviceDimensions = Dimensions.get('window')
 
 function GameOverScreen({numberOfRounds, pickedNumber, onStartNewGame}) {
     return (
-        <View style={styles.screen}>
+        <ScrollView style={styles.screen}>
             <Card style={styles.cardOverride}>
                 <Title>Game Over!</Title>
                 <View style={styles.imageContainer}>
@@ -17,7 +17,7 @@ function GameOverScreen({numberOfRounds, pickedNumber, onStartNewGame}) {
                 <Text style={styles.summaryText}>Your phone needed <Text style={styles.highlightText}>{numberOfRounds}</Text> rounds to guess the number <Text style={styles.highlightText}>{pickedNumber}</Text></Text>
                 <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
             </Card>
-        </View>
+        </ScrollView>
     )
 }
 

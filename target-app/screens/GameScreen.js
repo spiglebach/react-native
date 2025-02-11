@@ -1,4 +1,4 @@
-import { Alert, Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import Title from "../components/Title";
 import { useEffect, useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
@@ -72,7 +72,7 @@ function GameScreen({pickedNumber, onGameOver}) {
     }, [])
 
     return (
-        <View style={styles.screen}>
+        <ScrollView style={styles.screen}>
             <Card style={{flex: 1}}>
                 <Title>Opponent's Guess</Title>
                 <View style={styles.guessContainer}>
@@ -97,7 +97,7 @@ function GameScreen({pickedNumber, onGameOver}) {
                             renderItem={(itemData) => <GuessHistoryItem guessIndex={guessHistory.length - itemData.index} guess={itemData.item} />} />
                 </View>
             </Card>
-        </View>
+        </ScrollView>
     )
 }
 
