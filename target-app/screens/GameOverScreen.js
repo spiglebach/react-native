@@ -7,9 +7,19 @@ import PrimaryButton from "../components/PrimaryButton"
 function GameOverScreen({numberOfRounds, pickedNumber, onStartNewGame}) {
     const {width, height} = useWindowDimensions()
 
+    let imageSize = 300
+
+    if (width < 380) {
+        imageSize = 150
+    }
+
+    if (height < 400) {
+        imageSize = 120
+    }
+
     const imageConatinerStyles = {
-        width: width > 500 ? 120 : 200,
-        height: width > 500 ? 120 : 200,
+        width: imageSize,
+        height: imageSize,
     }
 
     return (
