@@ -1,8 +1,10 @@
 import CategoriesScreen from './screens/CategoriesScreen';
+import * as SystemUI from "expo-system-ui"
 
 export default function App() {
-  return (
-    <CategoriesScreen />
-  )
+    SystemUI.setBackgroundColorAsync("#aa2288")
+    return (
+        <CategoriesScreen />
+    )
 }
 
