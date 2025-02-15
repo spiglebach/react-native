@@ -7,11 +7,16 @@ function MealsOverviewScreen({ navigation, route }) { // useRoute() hook can be 
     const meals = MEALS.filter((meal) => meal.categoryIds.indexOf(categoryId) >= 0)
 
     function renderMealItem(itemData) {
+        const item = itemData.item
+        const mealItemProps = {
+            title: item.title,
+            imageUrl: item.imageUrl,
+            duration: item.duration,
+            complexity: item.complexity,
+            affordability: item.affordability
+        }
         return (
-            <MealItem
-                title={itemData.item.title}
-                imageUrl={itemData.item.imageUrl}
-            />
+            <MealItem {...mealItemProps}/>
         )
     }
 
