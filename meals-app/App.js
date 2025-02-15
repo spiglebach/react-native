@@ -8,13 +8,25 @@ import MealsOverviewScreen from './screens/MealsOverviewScreen';
 const Stack = createNativeStackNavigator()
 
 export default function App() {
-    SystemUI.setBackgroundColorAsync("#aa2288")
     return (
         <>
         <StatusBar style='dark'/>
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="MealCategories" component={CategoriesScreen} />
+                <Stack.Screen
+                    name="MealCategories"
+                    component={CategoriesScreen}
+                    options={{
+                        title: 'Categories',
+                        headerStyle: {
+                            backgroundColor: 'maroon'
+                        },
+                        headerTintColor: 'silver',
+                        contentStyle: {
+                            backgroundColor: 'brown'
+                        }
+                    }}
+                    />
                 <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
             </Stack.Navigator>
         </NavigationContainer>
