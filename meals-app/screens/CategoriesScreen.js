@@ -6,7 +6,9 @@ import { useNavigation } from '@react-navigation/native'
 function CategoryItem({itemData}) {
     const navigation = useNavigation()
     function pressHandler() {
-        navigation.navigate("MealsOverview")
+        navigation.navigate("MealsOverview", {
+            categoryId: itemData.item.id
+        })
     }
 
     return (
