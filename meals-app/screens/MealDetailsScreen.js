@@ -26,6 +26,22 @@ function MealDetailsScreen({route, navigation}) {
         isLactoseFree
     } = meal
 
+    const hasAnyAccessibility = isGlutenFree || isVegan || isVegetarian || isLactoseFree
+    let accessibilitySection
+    if (hasAnyAccessibility) {
+        accessibilitySection = (
+            <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Accessibility:</Text>
+                <View style={styles.sectionContent}>
+                    {isGlutenFree ? <Text>gluten free</Text> : null}
+                    {isVegan ? <Text>vegan</Text> : null}
+                    {isVegetarian ? <Text>vegetarian</Text> : null}
+                    {isLactoseFree ? <Text>lactose free</Text> : null}
+                </View>
+            </View>
+        )
+    }
+
     return (
         <ScrollView style={styles.outerContainer}>
             <Image style={styles.image} source={{
@@ -40,24 +56,16 @@ function MealDetailsScreen({route, navigation}) {
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Ingredients:</Text>
                 <View style={styles.sectionContent}>
-                    {ingredients.map(ingredient => <Text>{ingredient}</Text>)}
+                    {ingredients.map(ingredient => <Text key={ingredient}>{ingredient}</Text>)}
                 </View>
             </View>
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Steps:</Text>
                 <View style={styles.sectionContent}>
-                    {steps.map((step, index) => <Text>{index + 1}: {step}</Text>)}
+                    {steps.map((step, index) => <Text key={index}>{index + 1}: {step}</Text>)}
                 </View>
             </View>
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Accessibility:</Text>
-                <View style={styles.sectionContent}>
-                    <Text>{isGlutenFree ? 'gluten free' : null}</Text>
-                    <Text>{isVegan ? 'vegan' : null}</Text>
-                    <Text>{isVegetarian ? 'vegetarian' : null}</Text>
-                    <Text>{isLactoseFree ? 'lactose free' : null}</Text>
-                </View>
-            </View>
+            {accessibilitySection}
         </ScrollView>
     )
 }
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         fontWeight: 'bold',
-        paddingVertical: 14
+        padding: 14
     },
     quickDetails: {
         flexDirection: 'row',
@@ -89,7 +97,9 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         textAlign: 'center',
-        fontSize: 16
+        fontWeight: 'bold',
+        fontSize: 16,
+        margin: 6
     },
     sectionContent: {
         gap: 4
