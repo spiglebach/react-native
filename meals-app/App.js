@@ -4,13 +4,15 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailsScreen from './screens/MealDetailsScreen';
+import { SafeAreaView } from 'react-native';
 
 const Stack = createNativeStackNavigator()
 
 export default function App() {
     return (
         <>
-        <StatusBar style='dark'/>
+        <StatusBar style='light'/>
+        <SafeAreaView style={{flex: 1, backgroundColor: 'maroon'}}>
         <NavigationContainer>
             <Stack.Navigator screenOptions={{
                 headerStyle: {
@@ -38,6 +40,7 @@ export default function App() {
                     />
             </Stack.Navigator>
         </NavigationContainer>
+        </SafeAreaView>
         </>
     )
 }
