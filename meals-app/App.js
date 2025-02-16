@@ -8,6 +8,7 @@ import MealDetailsScreen from './screens/MealDetailsScreen';
 import { SafeAreaView } from 'react-native';
 import FavouritesScreen from './screens/FavouritesScreen';
 import { Ionicons } from '@expo/vector-icons'
+import FaviouritesContextProvider from './store/context/favourites-context';
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -52,6 +53,7 @@ export default function App() {
         <>
         <StatusBar style='light'/>
         <SafeAreaView style={{flex: 1, backgroundColor: 'maroon'}}>
+        <FaviouritesContextProvider>
         <NavigationContainer>
             <Stack.Navigator screenOptions={{
                 headerStyle: {
@@ -80,6 +82,7 @@ export default function App() {
                     />
             </Stack.Navigator>
         </NavigationContainer>
+        </FaviouritesContextProvider>
         </SafeAreaView>
         </>
     )
