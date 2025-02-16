@@ -1,6 +1,7 @@
-import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { MEALS } from "../data/dummy-data"
 import { useLayoutEffect } from "react"
+import IconButton from "../components/IconButton"
 
 function MealDetailsScreen({route, navigation}) {
     const mealId = route.params.mealId
@@ -15,7 +16,9 @@ function MealDetailsScreen({route, navigation}) {
             title: meal.title,
             headerRight: () => {
                 return (
-                    <Button title='Tap me'
+                    <IconButton
+                        icon="heart"
+                        color="silver"
                         onPress={headerButtonPressHandler}
                     />
                 )
