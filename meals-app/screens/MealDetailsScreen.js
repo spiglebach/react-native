@@ -3,18 +3,28 @@ import { MEALS } from "../data/dummy-data"
 import { useContext, useLayoutEffect } from "react"
 import IconButton from "../components/IconButton"
 import { FavouritesContext } from "../store/context/favourites-context"
+import { useDispatch, useSelector } from "react-redux"
+import { addFavourite, removeFavourite } from "../store/redux/favourites"
 
 function MealDetailsScreen({route, navigation}) {
     const mealId = route.params.mealId
     const meal = MEALS.find(meal => meal.id === mealId)
     const favouriteMealsContext = useContext(FavouritesContext)
-    const isFavourite = favouriteMealsContext.ids.includes(mealId)
+    const favouriteMealIdsContext = favouriteMealsContext.ids
+
+    const favouriteMealIdsRedux = useSelector((state) => state.favouriteMeals.ids)
+    const dispatch = useDispatch()
+
+    const isFavourite = favouriteMealIdsContext.includes(mealId) && favouriteMealIdsRedux.includes(mealId)
 
     function headerButtonPressHandler() {
         if (isFavourite) {
             favouriteMealsContext.removeFavourite(mealId)
+            dispatch(removeFavourite({ id: mealId}))
+            favouriteMealsContext.removeFavourite(mealId)
         } else {
             favouriteMealsContext.addFavourite(mealId)
+            dispatch(addFavourite({ id: mealId}))
         }
     }
 

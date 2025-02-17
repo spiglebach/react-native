@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { FavouritesContext } from "../store/context/favourites-context";
 import { StyleSheet, Text, View } from "react-native";
 
-function FavouritesScreen() {
+function ContextFavouritesScreen() {
     const favouriteMealsContext = useContext(FavouritesContext)
     const meals = MEALS.filter(meal => favouriteMealsContext.ids.includes(meal.id))
 
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FavouritesScreen
+export default ContextFavouritesScreen

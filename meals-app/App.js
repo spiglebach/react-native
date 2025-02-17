@@ -6,11 +6,12 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailsScreen from './screens/MealDetailsScreen';
 import { SafeAreaView } from 'react-native';
-import FavouritesScreen from './screens/FavouritesScreen';
 import { Ionicons } from '@expo/vector-icons'
 import FaviouritesContextProvider from './store/context/favourites-context';
 import { Provider } from 'react-redux';
 import { store } from './store/redux/store';
+import ContextFavouritesScreen from './screens/ContextFavouritesScreen';
+import ReduxFavouritesScreen from './screens/ReduxFavouritesScreen';
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -40,8 +41,15 @@ function DrawerNavigator() {
                 }}
             />
             <Drawer.Screen
-                name="Favourites"
-                component={FavouritesScreen}
+                name="Favourites (Context)"
+                component={ContextFavouritesScreen}
+                options={{
+                    drawerIcon: ({color, size}) => <Ionicons name="heart" color={color} size={size} />
+                }}
+            />
+            <Drawer.Screen
+                name="Favourites (Redux)"
+                component={ReduxFavouritesScreen}
                 options={{
                     drawerIcon: ({color, size}) => <Ionicons name="heart" color={color} size={size} />
                 }}
