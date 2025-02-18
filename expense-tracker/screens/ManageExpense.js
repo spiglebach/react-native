@@ -1,11 +1,13 @@
-import { useLayoutEffect } from 'react'
+import { useContext, useLayoutEffect } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import IconButton from '../components/ui/IconButton'
 import { GlobalStyles } from '../constants/styles'
 import Button from '../components/ui/Button'
+import { ExpensesContext } from '../store/context/expenses-context'
 
 function ManageExpenseScreen({navigation, route}) {
     const expenseId = route.params?.expenseId
+    const {deleteExpense} = useContext(ExpensesContext)
     const isEditing = !!expenseId
 
     useLayoutEffect(() => {
@@ -15,6 +17,7 @@ function ManageExpenseScreen({navigation, route}) {
     }, [expenseId, navigation])
 
     function deleteExpenseHandler() {
+        deleteExpense(expenseId)
         navigation.goBack()
     }
 
