@@ -12,15 +12,11 @@ import IconButton from './components/ui/IconButton';
 const BottomTabs = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
-function ViewExpensesNavigator({navigation}) {
-    function handleNavigation() {
-        navigation.navigate('ManageExpense')
-    }
-
+function ViewExpensesNavigator() {
     return (
         <BottomTabs.Navigator
-            screenOptions={{
-                headerRight: ({tintColor}) => <IconButton icon="add" size={24} color={tintColor} onPress={handleNavigation}/>,
+            screenOptions={({navigation}) => ({
+                headerRight: ({tintColor}) => <IconButton icon="add" size={24} color={tintColor} onPress={() => navigation.navigate('ManageExpense')}/>,
                 headerStyle: {
                     backgroundColor: GlobalStyles.colors.headerBackground
                 },
@@ -30,7 +26,7 @@ function ViewExpensesNavigator({navigation}) {
                 tabBarActiveTintColor: GlobalStyles.colors.activeTabColor,
                 tabBarInactiveTintColor: GlobalStyles.colors.inactiveTabColor,
                 headerTintColor: GlobalStyles.colors.headerTintColor
-            }}>
+            })}>
             <BottomTabs.Screen
                 name='RecentExpenses'
                 component={RecentExpensesScreen}
