@@ -1,5 +1,7 @@
 import { useLayoutEffect } from 'react'
-import { Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import IconButton from '../components/ui/IconButton'
+import { GlobalStyles } from '../constants/styles'
 
 function ManageExpenseScreen({navigation, route}) {
     const expenseId = route.params?.expenseId
@@ -11,14 +13,40 @@ function ManageExpenseScreen({navigation, route}) {
         })
     }, [expenseId, navigation])
 
-    if (isEditing) {
-        return (
-            <Text>Manage Expense (id: {expenseId})</Text>
-        )
+    function deleteExpenseHandler() {
+
     }
+
+    const deleteButton = isEditing && (
+        <View style={styles.deleteButtonContainer}>
+            <IconButton icon="trash" size={36} color={GlobalStyles.colors.deleteButtonColor} onPress={deleteExpenseHandler} />
+        </View>
+    )
+
     return (
-        <Text>New Expense</Text>
+        <View style={styles.container}>
+            {isEditing && <Text>expenseId: {expenseId}</Text>}
+            { deleteButton }
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 24,
+        backgroundColor: GlobalStyles.colors.screenBackgroundColor
+    },
+    deleteButtonContainer: {
+        marginTop: 'auto',
+        marginBottom: 24,
+        paddingVertical: 4,
+        borderWidth: 1,
+        borderColor: GlobalStyles.colors.deleteButtonColor,
+        alignItems: 'center',
+        borderRadius: 24,
+        backgroundColor: 'lightpink'
+    }
+})
 
 export default ManageExpenseScreen

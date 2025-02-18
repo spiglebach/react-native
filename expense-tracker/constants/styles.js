@@ -7,5 +7,7 @@ export const GlobalStyles = {
         highlightedTextColor: 'darkmagenta',
         summaryBackgroundColor: 'mistyrose',
         expenseItemBackgroundColor: 'lavenderblush',
+        screenBackgroundColor: 'lavender',
+        deleteButtonColor: 'firebrick'
     }
 }
