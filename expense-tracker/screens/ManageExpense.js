@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import IconButton from '../components/ui/IconButton'
 import { GlobalStyles } from '../constants/styles'
 import Button from '../components/ui/Button'
@@ -15,21 +15,21 @@ function ManageExpenseScreen({navigation, route}) {
     }, [expenseId, navigation])
 
     function deleteExpenseHandler() {
-
+        navigation.goBack()
     }
 
     function cancelHandler() {
-
+        navigation.goBack()
     }
 
     function confirmHandler() {
-
+        navigation.goBack()
     }
 
     const deleteButton = isEditing && (
-        <View style={styles.deleteButtonContainer}>
-            <IconButton icon="trash" size={24} color={GlobalStyles.colors.deleteButtonColor} onPress={deleteExpenseHandler} />
-        </View>
+        <Pressable style={({pressed}) => [styles.deleteButtonContainer, pressed && {opacity: 0.75}]} onPress={deleteExpenseHandler}>
+            <IconButton icon="trash" size={24} color={GlobalStyles.colors.deleteButtonColor} />
+        </Pressable>
     )
 
     return (
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     deleteButtonContainer: {
+        height: 50,
         marginTop: 24,
         marginBottom: 24,
         borderWidth: 1,

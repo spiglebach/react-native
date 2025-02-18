@@ -16,9 +16,9 @@ function IconButton({icon, size, color, onPress}) {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        borderRadius: 24,
-        padding: 6,
-        marginHorizontal: 8,
+        borderRadius: 8,
+        padding: 8,
+        marginHorizontal: 12,
         marginVertical: 2
     },
     pressed: {
