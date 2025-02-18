@@ -4,5 +4,8 @@ export const GlobalStyles = {
         headerTintColor: 'mistyrose',
         activeTabColor: 'gold',
         inactiveTabColor: 'silver',
+        highlightedTextColor: 'darkmagenta',
+        summaryBackgroundColor: 'mistyrose',
+        expenseItemBackgroundColor: 'lavenderblush',
     }
 }
