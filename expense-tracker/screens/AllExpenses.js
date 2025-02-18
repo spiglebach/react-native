@@ -1,9 +1,11 @@
+import { useContext } from 'react'
 import ExpensesOutput from '../components/ExpensesOutput'
-import { EXPENSES } from '../data/dummy-data'
+import { ExpensesContext } from '../store/context/expenses-context'
 
 function AllExpensesScreen() {
+    const {expenses} = useContext(ExpensesContext)
     return (
-        <ExpensesOutput expenses={EXPENSES} expensesPeriod="Total" />
+        <ExpensesOutput expenses={expenses} expensesPeriod="Total" />
     )
 }
 
