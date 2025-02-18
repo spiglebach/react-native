@@ -69,7 +69,7 @@ export default function App() {
                     name='ManageExpense'
                     component={ManageExpenseScreen} 
                     options={{
-                        title: 'Manage Expenses'
+                        presentation: 'modal'
                     }}
                 />
             </Stack.Navigator>
