@@ -2,6 +2,7 @@ import { useLayoutEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import IconButton from '../components/ui/IconButton'
 import { GlobalStyles } from '../constants/styles'
+import Button from '../components/ui/Button'
 
 function ManageExpenseScreen({navigation, route}) {
     const expenseId = route.params?.expenseId
@@ -17,15 +18,27 @@ function ManageExpenseScreen({navigation, route}) {
 
     }
 
+    function cancelHandler() {
+
+    }
+
+    function confirmHandler() {
+
+    }
+
     const deleteButton = isEditing && (
         <View style={styles.deleteButtonContainer}>
-            <IconButton icon="trash" size={36} color={GlobalStyles.colors.deleteButtonColor} onPress={deleteExpenseHandler} />
+            <IconButton icon="trash" size={24} color={GlobalStyles.colors.deleteButtonColor} onPress={deleteExpenseHandler} />
         </View>
     )
 
     return (
         <View style={styles.container}>
             {isEditing && <Text>expenseId: {expenseId}</Text>}
+            <View style={styles.buttonContainer}>
+                <Button style={styles.buttonStyle} mode='flat' onPress={cancelHandler}>Cancel</Button>
+                <Button style={styles.buttonStyle} onPress={confirmHandler}>{isEditing ? 'Update' : 'Add'}</Button>
+            </View>
             { deleteButton }
         </View>
     )
@@ -37,14 +50,22 @@ const styles = StyleSheet.create({
         padding: 24,
         backgroundColor: GlobalStyles.colors.screenBackgroundColor
     },
-    deleteButtonContainer: {
+    buttonContainer: {
         marginTop: 'auto',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 20
+    },
+    buttonStyle: {
+        flex: 1
+    },
+    deleteButtonContainer: {
+        marginTop: 24,
         marginBottom: 24,
-        paddingVertical: 4,
         borderWidth: 1,
         borderColor: GlobalStyles.colors.deleteButtonColor,
         alignItems: 'center',
-        borderRadius: 24,
+        borderRadius: 8,
         backgroundColor: 'lightpink'
     }
 })
