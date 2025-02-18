@@ -29,7 +29,7 @@ function ManageExpenseScreen({navigation, route}) {
         if  (isEditing) {
             updateExpense(expenseId, {description: 'test', amount: 19.99, date: new Date('2025-01-01')})
         } else {
-            addExpense({description: 'new expense', amount: 99.99, date: new Date('2025-02-02')})
+            addExpense({description: 'new expense', amount: 99.99, date: new Date()})
         }
         navigation.goBack()
     }
