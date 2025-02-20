@@ -2,13 +2,15 @@ import { useContext, useLayoutEffect } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import IconButton from '../components/ui/IconButton'
 import { GlobalStyles } from '../constants/styles'
-import Button from '../components/ui/Button'
 import { ExpensesContext } from '../store/context/expenses-context'
+import ExpenseForm from '../components/ManageExpense/ExpenseForm'
 
 function ManageExpenseScreen({navigation, route}) {
     const expenseId = route.params?.expenseId
-    const {deleteExpense, addExpense, updateExpense} = useContext(ExpensesContext)
+    const {expenses, deleteExpense, addExpense, updateExpense} = useContext(ExpensesContext)
     const isEditing = !!expenseId
+
+    const editedExpense = expenses.find(expense => expense.id === expenseId)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -25,11 +27,11 @@ function ManageExpenseScreen({navigation, route}) {
         navigation.goBack()
     }
 
-    function confirmHandler() {
+    function confirmHandler(expenseData) {
         if  (isEditing) {
-            updateExpense(expenseId, {description: 'test', amount: 19.99, date: new Date('2025-01-01')})
+            updateExpense(expenseId, expenseData)
         } else {
-            addExpense({description: 'new expense', amount: 99.99, date: new Date()})
+            addExpense(expenseData)
         }
         navigation.goBack()
     }
@@ -43,10 +45,11 @@ function ManageExpenseScreen({navigation, route}) {
     return (
         <View style={styles.container}>
             {isEditing && <Text>expenseId: {expenseId}</Text>}
-            <View style={styles.buttonContainer}>
-                <Button style={styles.buttonStyle} mode='flat' onPress={cancelHandler}>Cancel</Button>
-                <Button style={styles.buttonStyle} onPress={confirmHandler}>{isEditing ? 'Update' : 'Add'}</Button>
-            </View>
+            <ExpenseForm
+                defaultValues={editedExpense}
+                submitButtonLabel={isEditing ? 'Update' : 'Add'}
+                onSubmit={confirmHandler}
+                onCancel={cancelHandler}/>
             { deleteButton }
         </View>
     )
@@ -57,15 +60,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 24,
         backgroundColor: GlobalStyles.colors.screenBackgroundColor
-    },
-    buttonContainer: {
-        marginTop: 'auto',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        gap: 20
-    },
-    buttonStyle: {
-        flex: 1
     },
     deleteButtonContainer: {
         height: 50,
