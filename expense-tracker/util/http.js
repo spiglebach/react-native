@@ -11,6 +11,7 @@ export async function httpAddExpense(expenseData) {
 export async function httpGetExpenses() {
     const response = await axios.get(`${BACKEND_URL}/expenses`)
     const expenses = []
+    console.log(response)
     for (const index in response.data) {
         const expenseObject = {
             id: response.data[index].id.toString(),

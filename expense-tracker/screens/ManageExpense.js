@@ -6,9 +6,11 @@ import { ExpensesContext } from '../store/context/expenses-context'
 import ExpenseForm from '../components/ManageExpense/ExpenseForm'
 import { httpAddExpense, httpDeleteExpense, httpUpdateExpense } from '../util/http'
 import LoadingOverlay from '../components/ui/LoadingOverlay'
+import ErrorOverlay from '../components/ui/ErrorOverlay'
 
 function ManageExpenseScreen({navigation, route}) {
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [error, setError] = useState()
     const expenseId = route.params?.expenseId
     const {expenses, deleteExpense, addExpense, updateExpense} = useContext(ExpensesContext)
     const isEditing = !!expenseId
@@ -21,11 +23,17 @@ function ManageExpenseScreen({navigation, route}) {
         })
     }, [expenseId, navigation])
 
-    function deleteExpenseHandler() {
+    async function deleteExpenseHandler() {
         setIsSubmitting(true)
-        deleteExpense(expenseId)
-        httpDeleteExpense(expenseId)
-        navigation.goBack()
+        try {
+            await httpDeleteExpense(expenseId)
+            deleteExpense(expenseId)
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
+            setError('Could not delete expense - please try again later!')
+        }
+        setIsSubmitting(false)
     }
 
     function cancelHandler() {
@@ -34,14 +42,28 @@ function ManageExpenseScreen({navigation, route}) {
 
     async function confirmHandler(expenseData) {
         setIsSubmitting(true)
-        if  (isEditing) {
-            updateExpense(expenseId, expenseData)
-            await httpUpdateExpense(expenseId, expenseData)
-        } else {
-            const id = await httpAddExpense(expenseData)
-            addExpense({id: id, ...expenseData})
+        try {
+            if  (isEditing) {
+                await httpUpdateExpense(expenseId, expenseData)
+                updateExpense(expenseId, expenseData)
+            } else {
+                const id = await httpAddExpense(expenseData)
+                addExpense({id: id, ...expenseData})
+            }
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
+            setError('Could not save data - please try again later!')
         }
-        navigation.goBack()
+        setIsSubmitting(false)
+    }
+
+    function confirmErrorHandler() {
+        setError(null)
+    }
+
+    if (error && !isSubmitting) {
+        return <ErrorOverlay message={error} onConfirm={confirmErrorHandler}/>
     }
 
     if (isSubmitting) {
