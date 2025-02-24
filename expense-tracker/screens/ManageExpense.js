@@ -1,12 +1,14 @@
-import { useContext, useLayoutEffect } from 'react'
+import { useContext, useLayoutEffect, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import IconButton from '../components/ui/IconButton'
 import { GlobalStyles } from '../constants/styles'
 import { ExpensesContext } from '../store/context/expenses-context'
 import ExpenseForm from '../components/ManageExpense/ExpenseForm'
 import { httpAddExpense, httpDeleteExpense, httpUpdateExpense } from '../util/http'
+import LoadingOverlay from '../components/ui/LoadingOverlay'
 
 function ManageExpenseScreen({navigation, route}) {
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const expenseId = route.params?.expenseId
     const {expenses, deleteExpense, addExpense, updateExpense} = useContext(ExpensesContext)
     const isEditing = !!expenseId
@@ -20,6 +22,7 @@ function ManageExpenseScreen({navigation, route}) {
     }, [expenseId, navigation])
 
     function deleteExpenseHandler() {
+        setIsSubmitting(true)
         deleteExpense(expenseId)
         httpDeleteExpense(expenseId)
         navigation.goBack()
@@ -30,6 +33,7 @@ function ManageExpenseScreen({navigation, route}) {
     }
 
     async function confirmHandler(expenseData) {
+        setIsSubmitting(true)
         if  (isEditing) {
             updateExpense(expenseId, expenseData)
             await httpUpdateExpense(expenseId, expenseData)
@@ -38,6 +42,10 @@ function ManageExpenseScreen({navigation, route}) {
             addExpense({id: id, ...expenseData})
         }
         navigation.goBack()
+    }
+
+    if (isSubmitting) {
+        return <LoadingOverlay />
     }
 
     const deleteButton = isEditing && (
