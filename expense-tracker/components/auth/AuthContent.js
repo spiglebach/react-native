@@ -2,8 +2,10 @@ import {useState} from 'react'
 import {Alert, View} from 'react-native'
 import AuthForm from './AuthForm'
 import Button from '../ui/Button'
+import {useNavigation} from '@react-navigation/native'
 
 function AuthContent({isLogin, onAuthenticate}) {
+    const navigation = useNavigation()
     const [credentialsInvalid, setCredentialsInvalid] = useState({
         username: false,
         password: false,
@@ -38,6 +40,11 @@ function AuthContent({isLogin, onAuthenticate}) {
     }
 
     function switchAuthModeHandler() {
+        if (isLogin) {
+            navigation.replace('SignUp')
+        } else {
+            navigation.replace('Login')
+        }
     }
 
     return (
