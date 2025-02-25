@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useLayoutEffect, useState } from "react";
 
 export const AuthContext = createContext({
     token: '',
@@ -11,13 +12,26 @@ export const AuthContext = createContext({
 function AuthContextProvider({children}) {
     const [authToken, setAuthToken] = useState()
 
+    useLayoutEffect(() => {
+        async function fetchToken() {
+            const storedToken = await AsyncStorage.getItem('token')
+            console.log(storedToken)
+            if (storedToken) {
+                authenticate(storedToken)
+            }
+        } 
+        fetchToken()
+    }, [])
+
     function authenticate(token) {
         setAuthToken(token)
+        AsyncStorage.setItem('token', token)
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     }
 
     function logout() {
         setAuthToken(null)
+        AsyncStorage.removeItem('token')
         axios.defaults.headers.common['Authorization'] = null
     }
 
