@@ -32,3 +32,19 @@ export function httpUpdateExpense(id, expenseData) {
 export function httpDeleteExpense(id) {
     return axios.delete(`${BACKEND_URL}/expenses/${id}`)
 }
+
+export async function httpSignUp(username, password) {
+    const response = await axios.post(`${BACKEND_URL}/auth/signup`, {
+        username: username,
+        password: password
+    })
+    return response
+}
+
+export async function httpAuthenticate(username, password) {
+    const respone = await axios.post(`${BACKEND_URL}/auth/authenticate`, {
+        username: username,
+        password: password
+    })
+    return respone
+}

@@ -19,7 +19,7 @@ function AuthContent({isLogin, onAuthenticate}) {
         password = password.trim()
 
         const usernameIsValid = username.length >= 3
-        const passwordIsValid = password.length >= 6
+        const passwordIsValid = password.length >= 3
         const passwordsAreEqual = password === confirmPassword
 
         if (!usernameIsValid
