@@ -48,10 +48,12 @@ function AuthStack() {
 }
 
 function ViewExpensesNavigator() {
+    const {logout} = useContext(AuthContext)
     return (
         <BottomTabs.Navigator
             screenOptions={({navigation}) => ({
                 headerRight: ({tintColor}) => <IconButton icon="add" size={24} color={tintColor} onPress={() => navigation.navigate('ManageExpense')}/>,
+                headerLeft: () => <IconButton icon="exit" size={24} color='maroon' onPress={logout}/>,
                 headerStyle: {
                     backgroundColor: GlobalStyles.colors.headerBackground
                 },
