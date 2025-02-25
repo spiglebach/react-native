@@ -12,7 +12,9 @@ import ExpensesContextProvider from './store/context/expenses-context';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import AuthContextProvider, { AuthContext } from './store/context/auth-context';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 const BottomTabs = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -127,13 +129,34 @@ function Navigation() {
     )
 }
 
+function Root() {
+    const [isTryingToLogin, setIsTryingToLogin] = useState(true)
+    const {authenticate} = useContext(AuthContext)
+    useEffect(() => {
+        async function fetchToken() {
+            const storedToken = await AsyncStorage.getItem('token')
+            console.log(storedToken)
+            if (storedToken) {
+                authenticate(storedToken)
+            }
+            setIsTryingToLogin(false)
+        } 
+        fetchToken()
+    }, [])
+
+    if (isTryingToLogin) {
+        return <AppLoading />
+    }
+    return <Navigation />
+}
+
 export default function App() {
     return (
         <>
         <StatusBar style="light" />
         <AuthContextProvider>
         <ExpensesContextProvider>
-            <Navigation />
+            <Root />
         </ExpensesContextProvider>
         </AuthContextProvider>
         </>
