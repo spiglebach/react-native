@@ -11,6 +11,8 @@ import IconButton from './components/ui/IconButton';
 import ExpensesContextProvider from './store/context/expenses-context';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
+import AuthContextProvider, { AuthContext } from './store/context/auth-context';
+import { useContext } from 'react';
 
 const BottomTabs = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -106,15 +108,32 @@ function AuthenticatedStack() {
     )
 }
 
+function Navigation() {
+    const {isAuthenticated} = useContext(AuthContext)
+
+    let activeNavigationStack
+    if (isAuthenticated) {
+        activeNavigationStack = <AuthenticatedStack />
+    } else {
+        activeNavigationStack = <AuthStack />
+    }
+
+    return (
+        <NavigationContainer>
+            {activeNavigationStack}
+        </NavigationContainer>
+    )
+}
+
 export default function App() {
     return (
         <>
         <StatusBar style="light" />
+        <AuthContextProvider>
         <ExpensesContextProvider>
-        <NavigationContainer>
-            <AuthStack />
-        </NavigationContainer>
+            <Navigation />
         </ExpensesContextProvider>
+        </AuthContextProvider>
         </>
   );
 }
