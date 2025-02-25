@@ -9,9 +9,41 @@ import { GlobalStyles } from './constants/styles';
 import { Ionicons } from '@expo/vector-icons'
 import IconButton from './components/ui/IconButton';
 import ExpensesContextProvider from './store/context/expenses-context';
+import LoginScreen from './screens/LoginScreen';
+import SignupScreen from './screens/SignupScreen';
 
 const BottomTabs = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
+
+function AuthStack() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: GlobalStyles.colors.headerBackground
+                },
+                tabBarStyle: {
+                    backgroundColor: GlobalStyles.colors.headerBackground
+                },
+                tabBarActiveTintColor: GlobalStyles.colors.activeTabColor,
+                tabBarInactiveTintColor: GlobalStyles.colors.inactiveTabColor,
+                headerTintColor: GlobalStyles.colors.headerTintColor
+            }}>
+            <Stack.Screen
+                name='Login'
+                component={LoginScreen}
+                options={{
+                    title: 'Login'
+                }}/>
+            <Stack.Screen
+                name='SignUp'
+                component={SignupScreen}
+                options={{
+                    title: 'Sign Up'
+                }}/>
+        </Stack.Navigator>
+    )
+}
 
 function ViewExpensesNavigator() {
     return (
@@ -48,33 +80,39 @@ function ViewExpensesNavigator() {
     )
 }
 
+function AuthenticatedStack() {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle: {
+                backgroundColor: GlobalStyles.colors.headerBackground
+            },
+            headerTintColor: GlobalStyles.colors.headerTintColor
+        }}>
+            <Stack.Screen
+                name='ViewExpenses'
+                component={ViewExpensesNavigator}
+                options={{
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name='ManageExpense'
+                component={ManageExpenseScreen} 
+                options={{
+                    presentation: 'modal'
+                }}
+            />
+        </Stack.Navigator>
+    )
+}
+
 export default function App() {
     return (
         <>
         <StatusBar style="light" />
         <ExpensesContextProvider>
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{
-                headerStyle: {
-                    backgroundColor: GlobalStyles.colors.headerBackground
-                },
-                headerTintColor: GlobalStyles.colors.headerTintColor
-            }}>
-                <Stack.Screen
-                    name='ViewExpenses'
-                    component={ViewExpensesNavigator}
-                    options={{
-                        headerShown: false
-                    }}
-                />
-                <Stack.Screen
-                    name='ManageExpense'
-                    component={ManageExpenseScreen} 
-                    options={{
-                        presentation: 'modal'
-                    }}
-                />
-            </Stack.Navigator>
+            <AuthStack />
         </NavigationContainer>
         </ExpensesContextProvider>
         </>
